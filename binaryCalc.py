@@ -10,6 +10,7 @@ class dataPreperation:
         for x in range(len(value)):
             if(value[x]==1):
                 decimal = decimal + 2**x
+        print(decimal)
         return decimal
 
     def obtainValues(self):
@@ -92,17 +93,19 @@ class calculation:
         return result
 
     def substraction(self, operant1, operant2):
-        if(self.prepare.binaryToDecimal(self.prepare, operant1) < self.prepare.binaryToDecimal(self.prepare,operant2)):
+        if(self.prepare.binaryToDecimal(self.prepare, operant1) <= self.prepare.binaryToDecimal(self.prepare,operant2)):
             #build second complement
+            print("first possibility")
             for x in range(len(operant2)):
                 if(operant2[x] == 1):
                     operant2[x] = 0
                 else: operant2[x] = 1
                 plusOne = [0]*len(operant1)
-                plusOne[len(operant1)] = 1
+                plusOne[len(operant1)-1] = 1
                 operant2 = calculation.addition(operant1, plusOne)
                 return calculation.addition(operant1, operant2)
         else:
+            print("second possibility")
             transfer2 = 0
             result = [0]*len(operant1)
             for x in range(len(operant1)-1,-1,-1):
@@ -141,4 +144,4 @@ class Main:
         toInsert = [0]*len(values[0])
         values.insert(0,toInsert)
 
-    print(calc.substraction([0,1,1,0,0,1,1],[0,1,0,1,1,0,1]))
+    print(calc.substraction([0,1,1,0,1,1,0],[0,0,1,0,1,1,0]))

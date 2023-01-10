@@ -85,27 +85,28 @@ class calculation:
                     transfer = 1
             else:
                 result[x] = operant1[x]+operant2[x]+transfer
-                if(transfer + operant2[x] + operant1[x] == 2):
-                    result[x] == 0
+                if(result[x] == 2):
+                    result[x] = 0
                 else:
                     transfer = 0
 
         return result
 
     def substraction(self, operant1, operant2):
-        if(self.prepare.binaryToDecimal(self.prepare, operant1) <= self.prepare.binaryToDecimal(self.prepare,operant2)):
+        print(str(operant1) + "-" + str(operant2))
+        #if(self.prepare.binaryToDecimal(self.prepare, operant1) <= self.prepare.binaryToDecimal(self.prepare,operant2)):
             #build second complement
-            print("first possibility")
-            for x in range(len(operant2)):
-                if(operant2[x] == 1):
-                    operant2[x] = 0
-                else: operant2[x] = 1
-                plusOne = [0]*len(operant1)
-                plusOne[len(operant1)-1] = 1
-                operant2 = calculation.addition(operant1, plusOne)
-                return calculation.addition(operant1, operant2)
+        print("building second complement:")
+        operant2 = self.reverseBinaryOrder(operant2)
+        print(" inverted operant2: "+str(operant2))
+        plusOne = [0] * len(operant1)
+        plusOne[len(operant1) - 1] = 1
+        operant2 = calculation.addition(self,operant2, plusOne)
+        print(" result of second complement: "+ str(operant2))
+        return calculation.addition(self,operant1, operant2)
+        """
         else:
-            print("second possibility")
+            print("use calc system for substrcation")
             transfer2 = 0
             result = [0]*len(operant1)
             for x in range(len(operant1)-1,-1,-1):
@@ -113,6 +114,14 @@ class calculation:
                 result[x],z = calculation.substractionCalcSystem(self, result[x],transfer2)
                 transfer2 = transfer1
             return result
+        """
+    def reverseBinaryOrder(self, value):
+        for x in range(len(value)):
+            if (value[x] == 1):
+                value[x] = 0
+            else:
+                value[x] = 1
+        return value
 
     def substractionCalcSystem(self, operant1, operant2):
         if(operant1 == 1 and operant2 == 1):
@@ -144,4 +153,4 @@ class Main:
         toInsert = [0]*len(values[0])
         values.insert(0,toInsert)
 
-    print(calc.substraction([0,1,1,0,1,1,0],[0,0,1,0,1,1,0]))
+    print(calc.substraction([0,1,1,0],[1,1,0,0]))
